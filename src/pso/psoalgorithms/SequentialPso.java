@@ -6,7 +6,6 @@ import java.util.List;
 import pso.costfunctions.CostFunction;
 import pso.movements.Movement;
 import pso.swarm.Particle;
-import pso.swarm.SwarmGenerator;
 
 public class SequentialPso implements Pso {
 
@@ -45,8 +44,6 @@ public class SequentialPso implements Pso {
 			if (count % 1e4 == 0 || count < 10) {
 				System.out.println(count + " " + gBest.getPBestValue() + " "
 						+ gBest);
-
-				exlpodeIfStagnation(particles, gBest, costFunction);
 			}
 			
 			
@@ -69,26 +66,5 @@ public class SequentialPso implements Pso {
 
 		return new Particle(gBest);
 	}
-	
-	private void exlpodeIfStagnation(List<Particle> particles, Particle gBest, CostFunction costFunction) {
-		List<Double> speeds = new ArrayList<>();
-		for (int i = 0; i < gBest.getDimensions(); i++) {
-			speeds.add(0.0);
-		}
-		for (Particle particle : particles) {
-			for (int i = 0; i < particle.getDimensions(); i++) {
-				speeds.set(i, speeds.get(i)
-						+ particle.getSpeed().get(i));
-			}
-		}
-		double sumSpeed = 0.0;
-		for (Double d : speeds) {
-			sumSpeed += d;
-		}
-		if (sumSpeed < 1e-300) {
-			System.out.println("EXPLODE NOW");
-			particles = SwarmGenerator.generateSwarm(costFunction, particles.size(), gBest.getDimensions());
-		}
-	}
-	
+		
 }
