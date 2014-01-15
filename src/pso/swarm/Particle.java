@@ -69,7 +69,7 @@ public class Particle {
 	
 	@Override
 	public String toString() {
-		return "Particle [currentPos=" + currentPos + ", speed=" + speed + "]";
+		return "Particle [value=" + pBestValue + ", currentPos=" + currentPos + ", speed=" + speed + "]";
 	}
 	
 }
