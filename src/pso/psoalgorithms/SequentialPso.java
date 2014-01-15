@@ -6,10 +6,11 @@ import java.util.List;
 import pso.costfunctions.CostFunction;
 import pso.movements.Movement;
 import pso.swarm.Particle;
+import pso.swarm.PsoResult;
 
 public class SequentialPso implements Pso {
 
-	public Particle run(CostFunction costFunction, Movement movement,
+	public PsoResult run(CostFunction costFunction, Movement movement,
 			List<Particle> particles, int iterations, double precision) {
 		// store the gBest of the swarm
 		Particle gBest = getGlobalBest(particles, particles.get(0));
@@ -41,9 +42,8 @@ public class SequentialPso implements Pso {
 				end = true;
 			}
 
-			if (count % 1e4 == 0 || count < 10) {
-				System.out.println(count + " " + gBest.getPBestValue() + " "
-						+ gBest);
+			if (count % 1e4 == 0 || count < 100) {
+				System.out.println(count + " " + gBest);
 			}
 			
 			
@@ -54,7 +54,7 @@ public class SequentialPso implements Pso {
 		}
 
 		// return gBest
-		return gBest;
+		return new PsoResult(gBest, count);
 	}
 
 	private Particle getGlobalBest(List<Particle> particles, Particle gBest) {
